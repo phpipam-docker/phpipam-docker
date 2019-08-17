@@ -1,0 +1,28 @@
+#!/bin/sh
+
+/set_timezone
+
+case "$SCAN_INTERVAL" in
+  5m)  echo "*/5 *   *  *  *    /discovery_scan" >/etc/crontabs/apache
+  ;;
+  10m) echo "*/10 *  *  *  *    /discovery_scan" >/etc/crontabs/apache
+  ;;
+  15m) echo "*/15 *  *  *  *    /discovery_scan" >/etc/crontabs/apache
+  ;;
+  30m) echo "*/30 *  *  *  *    /discovery_scan" >/etc/crontabs/apache
+  ;;
+  1h)  echo "0 *     *  *  *    /discovery_scan" >/etc/crontabs/apache
+  ;;
+  2h)  echo "0 */2   *  *  *    /discovery_scan" >/etc/crontabs/apache
+  ;;
+  4h)  echo "0 */4   *  *  *    /discovery_scan" >/etc/crontabs/apache
+  ;;
+  6h)  echo "0 */6   *  *  *    /discovery_scan" >/etc/crontabs/apache
+  ;;
+  12h) echo "0 */12  *  *  *    /discovery_scan" >/etc/crontabs/apache
+  ;;
+  *)   echo "0 *     *  *  *    /discovery_scan" >/etc/crontabs/apache
+  ;;
+esac
+
+/usr/sbin/crond -f -l 8 -L /dev/stdout

@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ -f /usr/share/zoneinfo/$TZ ]; then
+  setup-timezone -z $TZ
+  echo -e "[Date]\ndate.timezone = $TZ" >/etc/php7/conf.d/99_tz.ini
+else
+  echo -e "[Date]\ndate.timezone = UTC" >/etc/php7/conf.d/99_tz.ini
+fi

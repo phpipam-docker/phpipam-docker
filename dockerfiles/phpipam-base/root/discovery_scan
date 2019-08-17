@@ -1,0 +1,5 @@
+#!/bin/sh
+
+/usr/bin/php /phpipam/functions/scripts/discoveryCheck.php
+/usr/bin/php /phpipam/functions/scripts/pingCheck.php
+/usr/bin/php /phpipam/functions/scripts/resolveIPaddresses.php
