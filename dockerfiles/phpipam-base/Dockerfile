@@ -3,7 +3,7 @@
 FROM alpine:3.10
 
 RUN apk upgrade --no-cache \
-    && apk add --no-cache tini git tzdata alpine-conf \
+    && apk add --no-cache tini git tzdata alpine-conf mariadb-client \
        php php-cli php-pear php-pdo_mysql php-json php-session php-gmp php-gd php-sockets php-gettext php-mbstring \
        php-ctype php-ldap php-curl php-snmp php-openssl php-simplexml php-pcntl php-iconv php-opcache php-posix \
        iputils fping \
