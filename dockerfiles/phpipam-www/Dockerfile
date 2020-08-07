@@ -18,17 +18,10 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.schema-version="1.0" \
       maintainer="Gary Allan <github@gallan.co.uk>"
 
-WORKDIR /phpipam
+WORKDIR /
 
 # Download phpIPAM
-RUN git clone -b $BRANCH --recursive --depth 1 https://github.com/phpipam/phpipam.git /phpipam \
-    && cd /phpipam \
-    && git config core.fileMode false \
-    && ln -s /phpipam/config.docker.php /phpipam/config.php \
-    && chmod -R u=rw,go=r /phpipam \
-    && chmod -R a+X /phpipam \
-    && find /phpipam -type d -name upload -exec chmod a=rwX {} \; \
-    && chmod a=rwX /phpipam/css/images/logo
+RUN /install_phpipam $BRANCH $VCS_REF
 
 # Run Apache
 EXPOSE 80
