@@ -2,4 +2,4 @@
 
 /set_timezone
 
-/usr/sbin/httpd -DFOREGROUND
+/usr/sbin/httpd -DFOREGROUND -c "Alias \"${IPAM_BASE:-/}\" \"/phpipam/\""
