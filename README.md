@@ -1,6 +1,3 @@
-# phpipam-docker
-
-Build scripts and dockerfiles for https://hub.docker.com/u/phpipam
 
 ---
 ## Intended Audience
@@ -165,7 +162,19 @@ $ docker ... -e IPAM_DATABASE_PASS_FILE=/run/secrets/ipam_database_password
 | **IPAM_GMAPS_API_KEY** 📂    | ""                      | ✅ ❌              | Google Maps and Geocode API Key. (Removed in v1.5.0, replaced by OpenStreetMap) |
 | **SCAN_INTERVAL**            | "1h"                    | ❌ ✅              | Network discovery job interval = 5m,10m,15m,30m,1h,2h,4h,6h,12h                 |
 
-### HAProxy SSL Example
+### Docker Swarm Configs
+
+All available phpIPAM configuration settings in [config.dist.php](https://github.com/phpipam/phpipam/blob/master/config.dist.php) can be configured via Docker Swarm Configs.
+
+Using a swarm management tool of your choice (e.g Portainer/Rancher). Create a new swarm Config. Populate the Config with the contents of [config.dist.php](https://github.com/phpipam/phpipam/blob/master/config.dist.php) and adjust all available settings as required.
+
+Assign the Config to the phpIPAM service and mount at `/phpipam/config.php`
+
+For Docker deployments session storage should be set to **database**. `$session_storage = "database";` This is set automatically when configured via Docker Environment variables.
+
+Assigning a swarm Config to `/phpipam/config.php` will disable the use of all Docker Environment variables except for TZ and SCAN_INTERVAL.
+
+## HAProxy SSL Example
 
 Example configuration to use HAProxy as a reverse HTTPS proxy for phpIPAM.
 
@@ -224,18 +233,6 @@ Restart the HAProxy container and check the container logs for issues.
 docker restart HAProxy
 docker container logs HAProxy
 ```
-
-### Docker Swarm Configs
-
-All available phpIPAM configuration settings in [config.dist.php](https://github.com/phpipam/phpipam/blob/master/config.dist.php) can be configured via Docker Swarm Configs.
-
-Using a swarm management tool of your choice (e.g Portainer/Rancher). Create a new swarm Config. Populate the Config with the contents of [config.dist.php](https://github.com/phpipam/phpipam/blob/master/config.dist.php) and adjust all available settings as required.
-
-Assign the Config to the phpIPAM service and mount at `/phpipam/config.php`
-
-For Docker deployments session storage should be set to **database**. `$session_storage = "database";` This is set automatically when configured via Docker Environment variables.
-
-Assigning a swarm Config to `/phpipam/config.php` will disable the use of all Docker Environment variables except for TZ and SCAN_INTERVAL.
 
 ## License
 
