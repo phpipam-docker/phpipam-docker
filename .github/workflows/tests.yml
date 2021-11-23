@@ -1,0 +1,19 @@
+name: tests
+
+on:
+  push:
+    branches: [master, main]
+    tags-ignore: ['**']
+    paths-ignore: ['**.md']
+  pull_request:
+    paths-ignore: ['**.md']
+
+jobs: # Docs: <https://git.io/JvxXE>
+  gitleaks:
+    name: Gitleaks
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+        with: {fetch-depth: 0}
+
+      - uses: zricethezav/gitleaks-action@v1 # Action page: <https://github.com/zricethezav/gitleaks-action>
