@@ -1,4 +1,18 @@
-# phpIPAM Apache container 
+# phpIPAM Apache container
+
+# STAGE 0
+
+FROM phpipam/phpipam-base:latest
+
+ARG BUILD_DATE
+ARG VCS_REF
+ARG VERSION
+ARG BRANCH
+
+# Clone phpIPAM application
+RUN apk add --no-cache git && /install_phpipam $BRANCH $VCS_REF
+
+# STAGE 1
 
 FROM phpipam/phpipam-base:latest
 
@@ -20,8 +34,8 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
 
 WORKDIR /
 
-# Download phpIPAM
-RUN /install_phpipam $BRANCH $VCS_REF
+# Copy phpIPAM
+COPY --from=0 /phpipam/ /phpipam/
 
 # Run Apache
 EXPOSE 80

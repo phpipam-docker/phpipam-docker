@@ -1,28 +1,36 @@
 #!/bin/ash
 
 if [ "$1" == "" ] || [ "$2" == "" ]; then
-  echo "Missing arguments BRANCH VCS_REF"
+  echo "ERROR: Missing arguments BRANCH VCS_REF"
   exit 1
 fi
 
 rm -fr /phpipam
 
-# Download software
-git clone -b $1 --recursive --depth 1 https://github.com/phpipam/phpipam.git /phpipam
+# Clone phpIPAM application
+git clone -q -b $1 --recursive --depth 1 https://github.com/phpipam/phpipam.git /phpipam
+if [ $? -ne 0 ]
+then
+  echo "ERROR: git clone failed"
+  exit 1
+fi
 
-# phpMailer fix
+# PHPMailer php7x fix
 cd /phpipam/functions/PHPMailer
 git checkout v6.4.1
-cd /
+cd /phpipam
 
 # Configure for Docker
 echo -e "\n\ndefine('GIT_VCS_REF', '$2');" >>/phpipam/functions/version.php
 ln -s /phpipam/config.docker.php /phpipam/config.php
 
-# remove .git files
-find /phpipam -name ".git*"        -exec rm -fr {} \;
+# Remove .git files
+find /phpipam -name ".git*" -exec rm -fr {} \;
 
-# Set permissions
+# Remove git submodule non-prod directories
+find /phpipam -type d \( -name "test" -o -name "tests" -o -name "examples" -o -name "demo*" \) -exec rm -fr {} \;
+
+# Set file permissions
 find /phpipam -type f              -exec chmod u=rw,go=r {} \;
 find /phpipam -type d              -exec chmod u=rwx,go=rx {} \;
 find /phpipam -type d -name upload -exec chmod a=rwx {} \;
