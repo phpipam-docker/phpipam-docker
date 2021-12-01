@@ -1,21 +1,24 @@
 # phpipam-docker
 
-Build scripts and dockerfiles for https://hub.docker.com/u/phpipam
+Build scripts and dockerfiles for [https://hub.docker.com/u/phpipam](https://hub.docker.com/u/phpipam)
 
 ---
+
 ## Intended Audience
+
 As the typical users of phpIPAM (Network admins) have limited experience with LAMP stacks, these docker images provide a simpler method to create and maintain a working phpIPAM environment. Given the intended audience, simplicity is preferred over complexity and some advanced use cases are not supported with these images.
 
-Native SSL support can be achived by use of the many reverse-https-proxy docker images available on DockerHub. See HAProxy example below.
+Native SSL support can be achieved by use of the many reverse-https-proxy docker images available on DockerHub. See HAProxy example below.
 
-For advanced use-cases phpIPAM can be installed in a VM by following the instructions found at https://phpipam.net/
+For advanced use-cases phpIPAM can be installed in a VM by following the instructions found at [https://phpipam.net](https://phpipam.net)
 
 ## Source files, Issues & Pull Requests
-Dockerfile build sources can be found at https://github.com/phpipam-docker/phpipam-docker
 
-Issues and pull requests/patches for phpipam-docker can be found at https://github.com/phpipam-docker/phpipam-docker
+Dockerfile build sources can be found at [https://github.com/phpipam-docker/phpipam-docker](https://github.com/phpipam-docker/phpipam-docker)
 
-Issues and pull requests for the phpIPAM application can be found at https://github.com/phpipam/phpipam
+Issues and pull requests/patches for phpipam-docker can be found at [https://github.com/phpipam-docker/phpipam-docker](https://github.com/phpipam-docker/phpipam-docker)
+
+Issues and pull requests for the phpIPAM application can be found at [https://github.com/phpipam/phpipam](https://github.com/phpipam/phpipam)
 
 ## Container Images
 
@@ -134,6 +137,7 @@ services:
 volumes:
   phpipam-logo:
 ```
+
 ## Configuration
 
 ### Supported Docker Environment Variables
@@ -141,29 +145,32 @@ volumes:
 A subset of available phpIPAM configuration settings in [config.dist.php](https://github.com/phpipam/phpipam/blob/master/config.dist.php) can be configured via Docker Environment variables.
 
 As an alternative to passing sensitive information via environment variables, _FILE may be appended to environment variables marked 📂, causing the initialization script to load the values for those variables from files present in the container. In particular, this can be used to load passwords from Docker secrets stored in /run/secrets/<secret_name> files.
+
 ```bash
-$ docker ... -e IPAM_DATABASE_PASS_FILE=/run/secrets/ipam_database_password
+docker ... -e IPAM_DATABASE_PASS_FILE=/run/secrets/ipam_database_password
 ```
-| ENV                          | Default                 | WWW/CRON Container | Description                                                                     |
-|------------------------------|-------------------------|:------------------:|---------------------------------------------------------------------------------|
-| **TZ**                       | "UTC"                   | ✅ ✅              | Time Zone (e.g "Europe/London")                                                 |
-| **IPAM_DATABASE_HOST** 📂    | "127.0.0.1"             | ✅ ✅              | MySQL database host                                                             |
-| **IPAM_DATABASE_USER** 📂    | "phpipam"               | ✅ ✅              | MySQL database user                                                             |
-| **IPAM_DATABASE_PASS** 📂    | "phpipamadmin"          | ✅ ✅              | MySQL database password                                                         |
-| **IPAM_DATABASE_NAME** 📂    | "phpipam"               | ✅ ✅              | MySQL database name                                                             |
-| **IPAM_DATABASE_PORT** 📂    | 3306                    | ✅ ✅              | MySQL database port                                                             |
-| **IPAM_DATABASE_WEBHOST** 📂 | "localhost"             | ✅ ✅              | MySQL allowed hosts                                                             |
-| **PROXY_ENABLED** 📂         | false                   | ✅ ✅              | Use proxy                                                                       |
-| **PROXY_SERVER** 📂          | "myproxy.something.com" | ✅ ✅              | Proxy server                                                                    |
-| **PROXY_PORT** 📂            | 8080                    | ✅ ✅              | Proxy port                                                                      |
-| **PROXY_USE_AUTH** 📂        | false                   | ✅ ✅              | Proxy authentication                                                            |
-| **PROXY_USER** 📂            | "USERNAME"              | ✅ ✅              | Proxy username                                                                  |
-| **PROXY_PASS** 📂            | "PASSWORD"              | ✅ ✅              | Proxy password                                                                  |
-| **IPAM_DEBUG** 📂            | false                   | ✅ ✅              | Enable php/application debugging                                                |
-| **COOKIE_SAMESITE** 📂       | "Lax"                   | ✅ ❌              | Cookie security policy = None,Lax,Strict. "None" requires HTTPS. (v1.4.5+)      |
-| **IPAM_BASE**                | "/"                     | ✅ ❌              | For proxy/loadbalancers. Path to access phpipam in site URL, http:/url/BASE/    |
-| **IPAM_GMAPS_API_KEY** 📂    | ""                      | ✅ ❌              | Google Maps and Geocode API Key. (Removed in v1.5.0, replaced by OpenStreetMap) |
-| **SCAN_INTERVAL**            | "1h"                    | ❌ ✅              | Network discovery job interval = 5m,10m,15m,30m,1h,2h,4h,6h,12h                 |
+
+| ENV                          | Default                 | WWW/CRON Container | Description                                                                                 |
+|------------------------------|-------------------------|:------------------:|---------------------------------------------------------------------------------------------|
+| **TZ**                       | "UTC"                   |        ✅ ✅       | Time Zone (e.g "Europe/London")                                                             |
+| **IPAM_DATABASE_HOST** 📂    | "127.0.0.1"             |        ✅ ✅       | MySQL database host                                                                         |
+| **IPAM_DATABASE_USER** 📂    | "phpipam"               |        ✅ ✅       | MySQL database user                                                                         |
+| **IPAM_DATABASE_PASS** 📂    | "phpipamadmin"          |        ✅ ✅       | MySQL database password                                                                     |
+| **IPAM_DATABASE_NAME** 📂    | "phpipam"               |        ✅ ✅       | MySQL database name                                                                         |
+| **IPAM_DATABASE_PORT** 📂    | 3306                    |        ✅ ✅       | MySQL database port                                                                         |
+| **IPAM_DATABASE_WEBHOST** 📂 | "localhost"             |        ✅ ✅       | MySQL allowed hosts                                                                         |
+| **PROXY_ENABLED** 📂         | false                   |        ✅ ✅       | Use proxy                                                                                   |
+| **PROXY_SERVER** 📂          | "myproxy.something.com" |        ✅ ✅       | Proxy server                                                                                |
+| **PROXY_PORT** 📂            | 8080                    |        ✅ ✅       | Proxy port                                                                                  |
+| **PROXY_USE_AUTH** 📂        | false                   |        ✅ ✅       | Proxy authentication                                                                        |
+| **PROXY_USER** 📂            | "USERNAME"              |        ✅ ✅       | Proxy username                                                                              |
+| **PROXY_PASS** 📂            | "PASSWORD"              |        ✅ ✅       | Proxy password                                                                              |
+| **IPAM_DEBUG** 📂            | false                   |        ✅ ✅       | Enable php/application debugging                                                            |
+| **OFFLINE_MODE** 📂          | false                   |        ✅ ❌       | Disable server-side Internet lookups and timeouts with restricted Internet access (v1.5.0+) |
+| **COOKIE_SAMESITE** 📂       | "Lax"                   |        ✅ ❌       | Cookie security policy = None,Lax,Strict. "None" requires HTTPS. (v1.4.5+)                  |
+| **IPAM_BASE**                | "/"                     |        ✅ ❌       | For proxy/loadbalancers. Path to access phpipam in site URL, http:/url/BASE/                |
+| **IPAM_GMAPS_API_KEY** 📂    | ""                      |        ✅ ❌       | Google Maps and Geocode API Key. (Removed in v1.5.0, replaced by OpenStreetMap)             |
+| **SCAN_INTERVAL**            | "1h"                    |        ❌ ✅       | Network discovery job interval = 5m,10m,15m,30m,1h,2h,4h,6h,12h                             |
 
 ### Docker Swarm Configs
 
@@ -183,14 +190,13 @@ Example configuration to use HAProxy as a reverse HTTPS proxy for phpIPAM.
 
 Create the HAProxy container.
 
-```
+```bash
 docker run -d -p 443:443 -p 80:80 --name HAProxy --restart always -v haproxy_ssl:/etc/ssl/certs -v haproxy_cfg:/usr/local/etc/haproxy haproxy:latest
 ```
 
 Create the /usr/local/etc/haproxy/haproxy.cfg configuration file inside the container.
 
-
-```
+```text
 # Example /usr/local/etc/haproxy/haproxy.cfg
 
 global
@@ -225,14 +231,14 @@ backend phpipam-web
 
 HAProxy will load your full-chain certificate and key files mounted at /etc/ssl/certs inside the container.
 
-```
+```bash
 haproxy@HAProxy:/etc/ssl/certs$ ls
 ipam.crt  ipam.crt.key
 ```
 
 Restart the HAProxy container and check the container logs for issues.
 
-```
+```bash
 docker restart HAProxy
 docker container logs HAProxy
 ```
