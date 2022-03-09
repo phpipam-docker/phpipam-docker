@@ -1,6 +1,10 @@
-#!/bin/sh
+#!/bin/ash
 
 /set_timezone
+if [ $? -ne 0 ]
+then
+  exit 1
+fi
 
 set -f
 case "$SCAN_INTERVAL" in

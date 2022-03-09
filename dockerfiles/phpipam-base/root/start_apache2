@@ -1,5 +1,9 @@
-#!/bin/sh
+#!/bin/ash
 
 /set_timezone
+if [ $? -ne 0 ]
+then
+  exit 1
+fi
 
 /usr/sbin/httpd -DFOREGROUND -c "Alias \"${IPAM_BASE:-/}\" \"/phpipam/\""
