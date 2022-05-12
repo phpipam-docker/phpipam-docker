@@ -172,32 +172,20 @@ docker ... -e IPAM_DATABASE_PASS_FILE=/run/secrets/ipam_database_password
 | **IPAM_GMAPS_API_KEY** 📂    | ""                      |        ✅ ❌       | Google Maps and Geocode API Key. (Removed in v1.5.0, replaced by OpenStreetMap)                 |
 | **SCAN_INTERVAL**            | "1h"                    |        ❌ ✅       | Network discovery job interval = 5m,10m,15m,30m,1h,2h,4h,6h,12h                                 |
 
-### In Containter config.php
+### In Container config.php
 
 From v1.5.0 the IPAM_CONFIG_FILE environment variable can be used load a configuration file located in a persistent volume.
 
 When IPAM_CONFIG_FILE is configured the following environment variables are available. All other enviroment variables are ignored and must be configured
 manually in the config.php file if required.
 
-| ENV                  | Default | WWW/CRON Container | Description                                                              |
-|----------------------|---------|:------------------:|--------------------------------------------------------------------------|
-| **TZ**               | "UTC"   |        ✅ ✅       | Time Zone (e.g "Europe/London")                                          |
-| **IPAM_CONFIG_FILE** | ""      |        ✅ ✅       | Full path to the config file (e.g "/config/config.php")<br>Must end .php |
-| **SCAN_INTERVAL**    | "1h"    |        ❌ ✅       | Network discovery job interval = 5m,10m,15m,30m,1h,2h,4h,6h,12h          |
+| ENV                  | Default | WWW/CRON Container | Description                                                                        |
+|----------------------|---------|:------------------:|------------------------------------------------------------------------------------|
+| **TZ**               | "UTC"   |        ✅ ✅       | Time Zone (e.g "Europe/London")                                                    |
+| **IPAM_CONFIG_FILE** | ""      |        ✅ ✅       | Full path to the config file (e.g "/config/config.php")<br>Must end .php (v1.5.0+) |
+| **SCAN_INTERVAL**    | "1h"    |        ❌ ✅       | Network discovery job interval = 5m,10m,15m,30m,1h,2h,4h,6h,12h                    |
 
-**NOTE: If load-balancing multiple containers set** `$session_storage = "database";`
-
-### Docker Swarm Configs
-
-All available phpIPAM configuration settings in [config.dist.php](https://github.com/phpipam/phpipam/blob/master/config.dist.php) can be configured via Docker Swarm Configs.
-
-Using a swarm management tool of your choice (e.g Portainer/Rancher). Create a new swarm Config. Populate the Config with the contents of [config.dist.php](https://github.com/phpipam/phpipam/blob/master/config.dist.php) and adjust all available settings as required.
-
-Assign the Config to the phpIPAM service and mount at `/phpipam/config.php`
-
-For Docker deployments session storage should be set to **database**. `$session_storage = "database";` This is set automatically when configured via Docker Environment variables.
-
-Assigning a swarm Config to `/phpipam/config.php` will disable the use of all Docker Environment variables except for TZ and SCAN_INTERVAL.
+_NOTE: When load-balancing multiple instances set_ `$session_storage = "database";` _to ensure consistent PHP session information across all containers._
 
 ## HAProxy SSL Example
 
