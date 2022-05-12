@@ -39,11 +39,11 @@ When running under Kubernetes, set allowPrivilegeEscalation=true
 
 ## Supported Tags
 
-- `latest` Tracks Latest production release (1.4x).
-- `1.4x`    Tracks the latest 1.4x release.
-- `1.5x`    Tracks the latest 1.5x release candidate.
-- `nightly` Nightly development snapshot (non-production).
-- `v1.4.x` Static releases.
+- `latest` Tracks the latest production release (1.5x).
+- `1.5x`    Tracks the 1.5 git release tree + Alpine Linux security updates.
+- `1.4x`    Tracks the 1.4 git release tree + Alpine Linux security updates (obsolete).
+- `nightly` Nightly git development snapshot (non-production).
+- `v1.5.x / v1.4.y` Static snapshots, no Alpine Linux security updates.
 
 ## Usage
 
@@ -172,6 +172,21 @@ docker ... -e IPAM_DATABASE_PASS_FILE=/run/secrets/ipam_database_password
 | **IPAM_GMAPS_API_KEY** 📂    | ""                      |        ✅ ❌       | Google Maps and Geocode API Key. (Removed in v1.5.0, replaced by OpenStreetMap)                 |
 | **SCAN_INTERVAL**            | "1h"                    |        ❌ ✅       | Network discovery job interval = 5m,10m,15m,30m,1h,2h,4h,6h,12h                                 |
 
+### In Containter config.php
+
+From v1.5.0 the IPAM_CONFIG_FILE environment variable can be used load a configuration file located in a persistent volume.
+
+When IPAM_CONFIG_FILE is configured the following environment variables are available. All other enviroment variables are ignored and must be configured
+manually in the config.php file if required.
+
+| ENV                  | Default | WWW/CRON Container | Description                                                              |
+|----------------------|---------|:------------------:|--------------------------------------------------------------------------|
+| **TZ**               | "UTC"   |        ✅ ✅       | Time Zone (e.g "Europe/London")                                          |
+| **IPAM_CONFIG_FILE** | ""      |        ✅ ✅       | Full path to the config file (e.g "/config/config.php")<br>Must end .php |
+| **SCAN_INTERVAL**    | "1h"    |        ❌ ✅       | Network discovery job interval = 5m,10m,15m,30m,1h,2h,4h,6h,12h          |
+
+**NOTE: If load-balancing multiple containers set** `$session_storage = "database";`
+
 ### Docker Swarm Configs
 
 All available phpIPAM configuration settings in [config.dist.php](https://github.com/phpipam/phpipam/blob/master/config.dist.php) can be configured via Docker Swarm Configs.
@@ -214,12 +229,14 @@ defaults
   timeout connect 5000ms
   timeout client  5000ms
   timeout server 60000ms
+  option forwardfor
 
 frontend phpipam-rp
   bind *:80
   bind *:443 ssl crt /etc/ssl/certs
   http-request redirect scheme https code 301 unless { ssl_fc }
   default_backend phpipam-web
+  http-request del-header X-Forwarded-For
 
 backend phpipam-web
   # Replace phpipam.local with the internal DNS name of your phpipam container.
