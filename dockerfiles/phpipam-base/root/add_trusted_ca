@@ -1,0 +1,8 @@
+#!/bin/ash
+
+if [ $CUSTOM_CA == "true" ]; then
+  echo "Info: Add custom Certificate Authorities set to 'true'. Appending .crt files from /ca-certs to /etc/ssl/certs/ca-certificates.crt"
+     for file in /ca-certs/*.crt; do
+        cat $file >> /etc/ssl/certs/ca-certificates.crt
+    done
+fi

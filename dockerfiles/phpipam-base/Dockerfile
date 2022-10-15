@@ -10,3 +10,5 @@ RUN apk upgrade --no-cache \
        apache2 apache2-ssl php-apache2
 
 COPY root/ /
+
+RUN mkdir /ca_certs

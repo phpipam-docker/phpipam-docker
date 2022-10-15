@@ -171,6 +171,7 @@ docker ... -e IPAM_DATABASE_PASS_FILE=/run/secrets/ipam_database_password
 | **IPAM_BASE**                | "/"                     |        ✅ ❌       | For proxy/load-balancers. Path to access phpipam in site URL, http:/url/BASE/                   |
 | **IPAM_GMAPS_API_KEY** 📂    | ""                      |        ✅ ❌       | Google Maps and Geocode API Key. (Removed in v1.5.0, replaced by OpenStreetMap)                 |
 | **SCAN_INTERVAL**            | "1h"                    |        ❌ ✅       | Network discovery job interval = 5m,10m,15m,30m,1h,2h,4h,6h,12h                                 |
+| **CUSTOM_CA**            | false                    |        ✅ ❌       | Mount a volume to /ca-certs and place all the .crt files for the CAs that need to be trusted by the system. |
 
 ### In Container config.php
 
