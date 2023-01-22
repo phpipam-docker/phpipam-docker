@@ -72,6 +72,7 @@ services:
     restart: unless-stopped
     volumes:
       - phpipam-logo:/phpipam/css/images/logo
+      - phpipam-ca:/usr/local/share/ca-certificates:ro
     depends_on:
       - phpipam-mariadb
 
@@ -83,6 +84,8 @@ services:
       - IPAM_DATABASE_PASS=my_secret_phpipam_pass
       - SCAN_INTERVAL=1h
     restart: unless-stopped
+    volumes:
+      - phpipam-ca:/usr/local/share/ca-certificates:ro
     depends_on:
       - phpipam-mariadb
 
@@ -97,6 +100,7 @@ services:
 volumes:
   phpipam-db-data:
   phpipam-logo:
+  phpipam-ca:
 ```
 
 ### Docker External MySQL Server
@@ -122,6 +126,7 @@ services:
     restart: unless-stopped
     volumes:
       - phpipam-logo:/phpipam/css/images/logo
+      - phpipam-ca:/usr/local/share/ca-certificates:ro
 
   phpipam-cron:
     image: phpipam/phpipam-cron:latest
@@ -133,9 +138,12 @@ services:
         - IPAM_DATABASE_NAME=existing_db_name
         - SCAN_INTERVAL=1h
     restart: unless-stopped
+    volumes:
+      - phpipam-ca:/usr/local/share/ca-certificates:ro
 
 volumes:
   phpipam-logo:
+  phpipam-ca:
 ```
 
 ## Configuration
@@ -186,6 +194,15 @@ manually in the config.php file if required.
 | **SCAN_INTERVAL**    | "1h"    |        ❌ ✅       | Network discovery job interval = 5m,10m,15m,30m,1h,2h,4h,6h,12h                    |
 
 _NOTE: When load-balancing multiple instances set_ `$session_storage = "database";` _to ensure consistent PHP session information across all containers._
+
+## Trusted CAs
+
+`update-ca-certificates` is run at startup, all certificates found below `/usr/local/share/ca-certificates` are included as implicitly trusted. Mount persistent storage at this location with custom trusted CAs in PEM format.
+
+``` bash
+/usr/local/share/ca-certificates # ls
+ACME_ROOT.crt ACME_INTERMEDIATE_1.crt ACME_INTERMEDIATE_2.crt
+```
 
 ## HAProxy SSL Example
 

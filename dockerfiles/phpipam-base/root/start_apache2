@@ -1,9 +1,14 @@
 #!/bin/ash
 
+# Pull in custom CAs from /usr/local/share/ca-certificates/
+/usr/sbin/update-ca-certificates
+
+# Verify timezone is valid
 /set_timezone
 if [ $? -ne 0 ]
 then
   exit 1
 fi
 
+# Start Apache
 /usr/sbin/httpd -DFOREGROUND -c "Alias \"${IPAM_BASE:-/}\" \"/phpipam/\""

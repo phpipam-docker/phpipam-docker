@@ -1,11 +1,16 @@
 #!/bin/ash
 
+# Pull in custom CAs from /usr/local/share/ca-certificates/
+/usr/sbin/update-ca-certificates
+
+# Verify timezone is valid
 /set_timezone
 if [ $? -ne 0 ]
 then
   exit 1
 fi
 
+# Start CRON
 set -f
 case "$SCAN_INTERVAL" in
   5m)  CRON_S="*/5 *"
