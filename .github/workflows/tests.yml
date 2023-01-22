@@ -9,11 +9,17 @@ on:
     paths-ignore: ['**.md']
 
 jobs: # Docs: <https://git.io/JvxXE>
-  gitleaks:
-    name: Gitleaks
-    runs-on: ubuntu-20.04
+  TruffleHog:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-        with: {fetch-depth: 0}
-
-      - uses: zricethezav/gitleaks-action@v1.6.0 # Action page: <https://github.com/zricethezav/gitleaks-action>
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: TruffleHog OSS
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: ${{ github.event.repository.default_branch }}
+          head: HEAD
+          extra_args: --debug --only-verified
