@@ -39,11 +39,12 @@ When running under Kubernetes, set allowPrivilegeEscalation=true
 
 ## Supported Tags
 
-- `latest` Tracks the latest production release (1.5x).
-- `1.5x`    Tracks the 1.5 git release tree + Alpine Linux security updates.
+- `latest` Tracks the latest production release (1.6x).
+- `1.6x`    Tracks the 1.6 git release tree + Alpine Linux security updates.
+- `1.5x`    Tracks the 1.5 git release tree + Alpine Linux security updates (obsolete).
 - `1.4x`    Tracks the 1.4 git release tree + Alpine Linux security updates (obsolete).
 - `nightly` Nightly git development snapshot (non-production).
-- `v1.5.x / v1.4.y` Static snapshots, no Alpine Linux security updates.
+- `v1.6.x / v1.5.y / v1.4.y` Static snapshots, no Alpine Linux security updates.
 
 ## Usage
 
@@ -158,27 +159,31 @@ As an alternative to passing sensitive information via environment variables, _F
 docker ... -e IPAM_DATABASE_PASS_FILE=/run/secrets/ipam_database_password
 ```
 
-| ENV                          | Default                 | WWW/CRON Container | Description                                                                                     |
-|------------------------------|-------------------------|:------------------:|-------------------------------------------------------------------------------------------------|
-| **TZ**                       | "UTC"                   |        ✅ ✅       | Time Zone (e.g "Europe/London")                                                                 |
-| **IPAM_DATABASE_HOST** 📂    | "127.0.0.1"             |        ✅ ✅       | MySQL database host                                                                             |
-| **IPAM_DATABASE_USER** 📂    | "phpipam"               |        ✅ ✅       | MySQL database user                                                                             |
-| **IPAM_DATABASE_PASS** 📂    | "phpipamadmin"          |        ✅ ✅       | MySQL database password                                                                         |
-| **IPAM_DATABASE_NAME** 📂    | "phpipam"               |        ✅ ✅       | MySQL database name                                                                             |
-| **IPAM_DATABASE_PORT** 📂    | 3306                    |        ✅ ✅       | MySQL database port                                                                             |
-| **IPAM_DATABASE_WEBHOST** 📂 | "localhost"             |        ✅ ✅       | MySQL allowed hosts                                                                             |
-| **PROXY_ENABLED** 📂         | false                   |        ✅ ✅       | Use proxy                                                                                       |
-| **PROXY_SERVER** 📂          | "myproxy.something.com" |        ✅ ✅       | Proxy server                                                                                    |
-| **PROXY_PORT** 📂            | 8080                    |        ✅ ✅       | Proxy port                                                                                      |
-| **PROXY_USE_AUTH** 📂        | false                   |        ✅ ✅       | Proxy authentication                                                                            |
-| **PROXY_USER** 📂            | "USERNAME"              |        ✅ ✅       | Proxy username                                                                                  |
-| **PROXY_PASS** 📂            | "PASSWORD"              |        ✅ ✅       | Proxy password                                                                                  |
-| **IPAM_DEBUG** 📂            | false                   |        ✅ ✅       | Enable php/application debugging                                                                |
-| **OFFLINE_MODE** 📂          | false                   |        ✅ ❌       | Disable server-side Internet requests, avoid timeouts with restricted Internet access (v1.5.0+) |
-| **COOKIE_SAMESITE** 📂       | "Lax"                   |        ✅ ❌       | Cookie security policy = None,Lax,Strict. "None" requires HTTPS. (v1.4.5+)                      |
-| **IPAM_BASE**                | "/"                     |        ✅ ❌       | For proxy/load-balancers. Path to access phpipam in site URL, http:/url/BASE/                   |
-| **IPAM_GMAPS_API_KEY** 📂    | ""                      |        ✅ ❌       | Google Maps and Geocode API Key. (Removed in v1.5.0, replaced by OpenStreetMap)                 |
-| **SCAN_INTERVAL**            | "1h"                    |        ❌ ✅       | Network discovery job interval = 5m,10m,15m,30m,1h,2h,4h,6h,12h                                 |
+| ENV                           | Default                 | WWW/CRON Container | Description                                                                                     |
+|-------------------------------|-------------------------|:------------------:|-------------------------------------------------------------------------------------------------|
+| **TZ**                        | "UTC"                   |        ✅ ✅         | Time Zone (e.g "Europe/London")                                                                 |
+| **IPAM_DATABASE_HOST** 📂     | "127.0.0.1"             |        ✅ ✅         | MySQL database host                                                                             |
+| **IPAM_DATABASE_USER** 📂     | "phpipam"               |        ✅ ✅         | MySQL database user                                                                             |
+| **IPAM_DATABASE_PASS** 📂     | "phpipamadmin"          |        ✅ ✅         | MySQL database password                                                                         |
+| **IPAM_DATABASE_NAME** 📂     | "phpipam"               |        ✅ ✅         | MySQL database name                                                                             |
+| **IPAM_DATABASE_PORT** 📂     | 3306                    |        ✅ ✅         | MySQL database port                                                                             |
+| **IPAM_DATABASE_WEBHOST** 📂  | "localhost"             |        ✅ ✅         | MySQL allowed hosts                                                                             |
+| **IPAM_BASE**                 | "/"                     |        ✅ ❌         | For reverse-proxy/load-balancers. Path to access phpipam in site URL, http:/url/BASE/           |
+| **IPAM_TRUST_X_FORWARDED** 📂 | "false"                 |        ✅ ❌         | Trust and use X_FORWARDED_* headers set by reverse-proxies/load-balancers (v1.6.0+)  \*         |
+| **PROXY_ENABLED** 📂          | false                   |        ✅ ✅         | Use proxy                                                                                       |
+| **PROXY_SERVER** 📂           | "myproxy.something.com" |        ✅ ✅         | Proxy server                                                                                    |
+| **PROXY_PORT** 📂             | 8080                    |        ✅ ✅         | Proxy port                                                                                      |
+| **PROXY_USE_AUTH** 📂         | false                   |        ✅ ✅         | Proxy authentication                                                                            |
+| **PROXY_USER** 📂             | "USERNAME"              |        ✅ ✅         | Proxy username                                                                                  |
+| **PROXY_PASS** 📂             | "PASSWORD"              |        ✅ ✅         | Proxy password                                                                                  |
+| **IPAM_DEBUG** 📂             | false                   |        ✅ ✅         | Enable php/application debugging                                                                |
+| **OFFLINE_MODE** 📂           | false                   |        ✅ ❌         | Disable server-side Internet requests, avoid timeouts with restricted Internet access (v1.5.0+) |
+| **COOKIE_SAMESITE** 📂        | "Lax"                   |        ✅ ❌         | Cookie security policy = None,Lax,Strict. "None" requires HTTPS. (v1.4.5+)                      |
+| **IPAM_FOOTER_MESSAGE** 📂    | ""                      |        ✅ ❌         | Custom message included in the footer of every page (v1.6.0+)                                   |
+| **IPAM_GMAPS_API_KEY** 📂     | ""                      |        ✅ ❌         | Google Maps and Geocode API Key. (Removed in v1.5.0, replaced by OpenStreetMap)                 |
+| **SCAN_INTERVAL**             | "1h"                    |        ❌ ✅         | Network discovery job interval = 5m,10m,15m,30m,1h,2h,4h,6h,12h                                 |
+
+**\*** Enabling **IPAM_TRUST_X_FORWARDED** without filtering request from end-clients can result in security issues. Ensure the headers are filtered or overwritten by the reverse-proxy/loadbalancer and can not be set by the clients.
 
 ### In Container config.php
 
