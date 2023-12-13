@@ -30,6 +30,7 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.vendor="phpIPAM" \
       org.label-schema.version=$VERSION \
       org.label-schema.schema-version="1.0" \
+      org.opencontainers.image.source="https://github.com/phpipam-docker/phpipam-docker" \
       maintainer="Gary Allan <github@gallan.co.uk>"
 
 WORKDIR /
