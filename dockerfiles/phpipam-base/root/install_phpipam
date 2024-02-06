@@ -27,7 +27,7 @@ find /phpipam -type d \( -name "test" -o -name "tests" -o -name "examples" -o -n
 
 # Install composer
 cd /phpipam/functions
-composer install
+COMPOSER_ALLOW_SUPERUSER=1 composer install --no-plugins --no-scripts
 
 # Set file permissions
 find /phpipam -type f              -exec chmod u=rw,go=r {} \;
