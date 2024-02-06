@@ -25,6 +25,10 @@ find /phpipam -name ".git*" -exec rm -fr {} \;
 # Remove git submodule non-prod directories
 find /phpipam -type d \( -name "test" -o -name "tests" -o -name "examples" -o -name "demo*" \) -exec rm -fr {} \;
 
+# Install composer
+cd /phpipam/functions
+composer install
+
 # Set file permissions
 find /phpipam -type f              -exec chmod u=rw,go=r {} \;
 find /phpipam -type d              -exec chmod u=rwx,go=rx {} \;
