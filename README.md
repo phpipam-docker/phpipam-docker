@@ -163,7 +163,7 @@ docker ... -e IPAM_DATABASE_PASS_FILE=/run/secrets/ipam_database_password
 | ENV                           | Default                 | WWW/CRON Container | Description                                                                                     |
 |-------------------------------|-------------------------|:------------------:|-------------------------------------------------------------------------------------------------|
 | **TZ**                        | "UTC"                   |        ✅ ✅         | Time Zone (e.g "Europe/London")                                                                 |
-| **IPAM_DISABLE_INSTALLER** 📂 | "false"                 |        ✅ ❌         | Disables installation helper scripts \*\*                                                       |
+| **IPAM_DISABLE_INSTALLER** 📂 | "false"                 |        ✅ ❌         | Disables installation helper scripts (v1.6.1+) \*\*                                             |
 | **IPAM_DATABASE_HOST** 📂     | "127.0.0.1"             |        ✅ ✅         | MySQL database host                                                                             |
 | **IPAM_DATABASE_USER** 📂     | "phpipam"               |        ✅ ✅         | MySQL database user                                                                             |
 | **IPAM_DATABASE_PASS** 📂     | "phpipamadmin"          |        ✅ ✅         | MySQL database password                                                                         |
