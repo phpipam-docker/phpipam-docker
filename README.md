@@ -39,12 +39,13 @@ When running under Kubernetes, set allowPrivilegeEscalation=true
 
 ## Supported Tags
 
-- `latest` Tracks the latest production release (1.6x).
-- `1.6x`    Tracks the 1.6 git release tree + Alpine Linux security updates.
-- `1.5x`    Tracks the 1.5 git release tree + Alpine Linux security updates (obsolete).
-- `1.4x`    Tracks the 1.4 git release tree + Alpine Linux security updates (obsolete).
+- `latest` Tracks the latest stable release + Alpine Linux security updates.
+- `1.7x`    Tracks the 1.7 git maintenance branch + Alpine Linux security updates.
+- `1.6x`    Tracks the 1.6 git maintenance branch + Alpine Linux security updates (obsolete).
+- `1.5x`    Tracks the 1.5 git maintenance branch + Alpine Linux security updates (obsolete).
+- `1.4x`    Tracks the 1.4 git maintenance branch + Alpine Linux security updates (obsolete).
 - `nightly` Nightly git development snapshot (non-production).
-- `v1.6.x / v1.5.y / v1.4.y` Static snapshots, no Alpine Linux security updates.
+- `v1.7.x / v1.6.y / v1.5.y` Static snapshots, no Alpine Linux security updates.
 
 ## Usage
 
@@ -162,6 +163,7 @@ docker ... -e IPAM_DATABASE_PASS_FILE=/run/secrets/ipam_database_password
 | ENV                           | Default                 | WWW/CRON Container | Description                                                                                     |
 |-------------------------------|-------------------------|:------------------:|-------------------------------------------------------------------------------------------------|
 | **TZ**                        | "UTC"                   |        ✅ ✅         | Time Zone (e.g "Europe/London")                                                                 |
+| **IPAM_DISABLE_INSTALLER** 📂 | "false"                 |        ✅ ❌         | Disables installation helper scripts \*\*                                                       |
 | **IPAM_DATABASE_HOST** 📂     | "127.0.0.1"             |        ✅ ✅         | MySQL database host                                                                             |
 | **IPAM_DATABASE_USER** 📂     | "phpipam"               |        ✅ ✅         | MySQL database user                                                                             |
 | **IPAM_DATABASE_PASS** 📂     | "phpipamadmin"          |        ✅ ✅         | MySQL database password                                                                         |
@@ -184,6 +186,8 @@ docker ... -e IPAM_DATABASE_PASS_FILE=/run/secrets/ipam_database_password
 | **SCAN_INTERVAL**             | "1h"                    |        ❌ ✅         | Network discovery job interval = 5m,10m,15m,30m,1h,2h,4h,6h,12h                                 |
 
 **\*** Enabling **IPAM_TRUST_X_FORWARDED** without filtering request from end-clients can result in security issues. Ensure the headers are filtered or overwritten by the reverse-proxy/loadbalancer and can not be set by the clients.
+
+**\*\*** Please disable installation helper scripts by setting **IPAM_DISABLE_INSTALLER = 1** after initial setup is complete.
 
 ### In Container config.php
 
