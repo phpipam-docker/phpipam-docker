@@ -10,7 +10,7 @@ fi
 if [ -f /usr/share/zoneinfo/$TZ ]; then
   echo "Info: Setting timezone to $TZ"
   setup-timezone -z $TZ
-  echo -e "[Date]\ndate.timezone = $TZ" >/etc/php82/conf.d/99_tz.ini
+  echo -e "[Date]\ndate.timezone = $TZ" >/etc/php83/conf.d/99_tz.ini
   exit 0
 else
   echo "Error: Timezone TZ=\"$TZ\" not found in /usr/share/zoneinfo"
