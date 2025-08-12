@@ -1,6 +1,6 @@
 # phpIPAM common OS image layer
 
-FROM alpine:3.20
+FROM alpine:3.22
 
 RUN apk upgrade --no-cache \
     && apk add --no-cache tini tzdata alpine-conf mariadb-client \
