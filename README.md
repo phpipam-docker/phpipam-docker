@@ -77,6 +77,9 @@ services:
       - phpipam-ca:/usr/local/share/ca-certificates:ro
     depends_on:
       - phpipam-mariadb
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
 
   phpipam-cron:
     image: phpipam/phpipam-cron:latest
@@ -90,6 +93,9 @@ services:
       - phpipam-ca:/usr/local/share/ca-certificates:ro
     depends_on:
       - phpipam-mariadb
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
 
   phpipam-mariadb:
     image: mariadb:latest
