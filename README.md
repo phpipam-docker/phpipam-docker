@@ -135,6 +135,9 @@ services:
     volumes:
       - phpipam-logo:/phpipam/css/images/logo
       - phpipam-ca:/usr/local/share/ca-certificates:ro
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
 
   phpipam-cron:
     image: phpipam/phpipam-cron:latest
@@ -148,6 +151,9 @@ services:
     restart: unless-stopped
     volumes:
       - phpipam-ca:/usr/local/share/ca-certificates:ro
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
 
 volumes:
   phpipam-logo:
