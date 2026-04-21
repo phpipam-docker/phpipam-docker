@@ -40,12 +40,14 @@ When running under Kubernetes, set allowPrivilegeEscalation=true
 ## Supported Tags
 
 - `latest` Tracks the latest stable release + Alpine Linux security updates.
-- `1.7x`    Tracks the 1.7 git maintenance branch + Alpine Linux security updates.
+- `1.8x`    Tracks the 1.8 git maintenance branch + Alpine Linux security updates.
+- `1.7x`    Tracks the 1.7 git maintenance branch + Alpine Linux security updates (obsolete).
 - `1.6x`    Tracks the 1.6 git maintenance branch + Alpine Linux security updates (obsolete).
 - `1.5x`    Tracks the 1.5 git maintenance branch + Alpine Linux security updates (obsolete).
 - `1.4x`    Tracks the 1.4 git maintenance branch + Alpine Linux security updates (obsolete).
 - `nightly` Nightly git development snapshot (non-production).
-- `v1.7.x / v1.6.y / v1.5.y` Static snapshots, no Alpine Linux security updates.
+- `v1.8.x / v1.7.y / v1.6.y` Static snapshots, no Alpine Linux security updates.
+- `xhprof`  PHP profiling enabled development build of phpIPAM. Access xhprof gui at /xhprof/ **-- DEV/TEST USE ONLY --**
 
 ## Usage
 
