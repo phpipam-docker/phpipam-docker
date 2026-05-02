@@ -1,20 +1,8 @@
-# phpIPAM Apache container
+# phpIPAM Apache-xhprof container
 
 # STAGE 0
 
-FROM garyallan/phpipam-base:latest
-
-ARG BUILD_DATE
-ARG VCS_REF
-ARG VERSION
-ARG BRANCH
-
-# Clone phpIPAM application
-RUN apk add --no-cache git && /install_phpipam $BRANCH $VCS_REF
-
-# STAGE 1
-
-FROM garyallan/phpipam-base:latest
+FROM phpipam/phpipam-www:nightly
 
 ARG BUILD_DATE
 ARG VCS_REF
@@ -36,9 +24,6 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       maintainer="Gary Allan <github@gallan.co.uk>"
 
 WORKDIR /
-
-# Copy phpIPAM
-COPY --from=0 /phpipam/ /phpipam/
 
 COPY root/ /
 

@@ -25,12 +25,25 @@ find /phpipam -name ".git*" -exec rm -fr {} \;
 # Remove git submodule non-prod directories
 find /phpipam -type d \( -name "test" -o -name "tests" -o -name "examples" -o -name "demo*" \) -exec rm -fr {} \;
 
-# Install composer
-cd /phpipam/functions
-COMPOSER_ALLOW_SUPERUSER=1 composer install --no-plugins --no-scripts
+# Install composer "functions" (pre-v1.9.0)
+if [ -e "/phpipam/functions/composer.json" ]
+then
+  cd /phpipam/functions
+  COMPOSER_ALLOW_SUPERUSER=1 composer install --no-plugins --no-scripts --no-dev
+
+  # Fixup apache config
+  sed -i 's/\/public//' /etc/apache2/conf.d/phpipam.conf
+fi
+
+# Install composer in root (v1.9.0+)
+if [ -e "/phpipam/composer.json" ]
+then
+  cd /phpipam
+  COMPOSER_ALLOW_SUPERUSER=1 composer install --no-plugins --no-scripts --no-dev
+fi
 
 # Set file permissions
 find /phpipam -type f              -exec chmod u=rw,go=r {} \;
 find /phpipam -type d              -exec chmod u=rwx,go=rx {} \;
-find /phpipam -type d -name upload -exec chmod a=rwx {} \;
-chmod a=rwX /phpipam/css/images/logo
+find /phpipam -type d -name upload -exec chmod a=rwX {} \;
+find /phpipam -type d -name logo -exec chmod a=rwX {} \;

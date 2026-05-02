@@ -37,6 +37,7 @@ WORKDIR /
 
 # Copy phpIPAM
 COPY --from=0 /phpipam/ /phpipam/
+COPY --from=0 /etc/apache2/conf.d/phpipam.conf /etc/apache2/conf.d/phpipam.conf
 
 # Run Apache
 EXPOSE 80
