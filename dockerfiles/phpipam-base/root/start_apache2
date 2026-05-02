@@ -10,5 +10,11 @@ then
   exit 1
 fi
 
-# Start Apache
-/usr/sbin/httpd -DFOREGROUND -c "Alias \"${IPAM_BASE:-/}\" \"/phpipam/\""
+if [ -e "/phpipam/public/index.php" ]
+then
+  # Start Apache
+  /usr/sbin/httpd -DFOREGROUND -c "Alias \"${IPAM_BASE:-/}\" \"/phpipam/public/\""
+else
+ # Start Apache
+  /usr/sbin/httpd -DFOREGROUND -c "Alias \"${IPAM_BASE:-/}\" \"/phpipam/\""
+fi
