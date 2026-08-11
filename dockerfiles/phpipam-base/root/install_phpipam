@@ -29,7 +29,7 @@ find /phpipam -type d \( -name "test" -o -name "tests" -o -name "examples" -o -n
 if [ -e "/phpipam/functions/composer.json" ]
 then
   cd /phpipam/functions
-  COMPOSER_ALLOW_SUPERUSER=1 composer install --no-plugins --no-scripts --no-dev
+  COMPOSER_ALLOW_SUPERUSER=1 php composer.phar install --no-plugins --no-scripts --no-dev
 
   # Fixup apache config
   sed -i 's/\/public//' /etc/apache2/conf.d/phpipam.conf
@@ -39,7 +39,7 @@ fi
 if [ -e "/phpipam/composer.json" ]
 then
   cd /phpipam
-  COMPOSER_ALLOW_SUPERUSER=1 composer install --no-plugins --no-scripts --no-dev
+  COMPOSER_ALLOW_SUPERUSER=1 php composer.phar install --no-plugins --no-scripts --no-dev
 fi
 
 # Set file permissions
